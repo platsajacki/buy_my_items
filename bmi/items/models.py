@@ -1,6 +1,7 @@
-from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
+from core.models import TimestampedModel, TimestampedModifiedModel
 
 
 class Currency(models.TextChoices):
@@ -8,20 +9,11 @@ class Currency(models.TextChoices):
     EUR = 'eur', _('euro')
 
 
-class Tax(models.Model):
-    tax_stripe_id = models.CharField(
-        _('tax stripe id'), max_length=255, unique=True
-    )
-    rate = models.DecimalField(
-        _('rate'),
-        max_digits=5,
-        decimal_places=2,
-        validators=[MinValueValidator(0)],
-        editable=False,
-    )
+class Tax(TimestampedModifiedModel):
+    tax_stripe_id = models.CharField(_('tax stripe id'), max_length=255, unique=True)
 
     class Meta:
-        ordering = ('rate',)
+        ordering = ('modified',)
         verbose_name = _('tax')
         verbose_name_plural = _('taxes')
 
@@ -29,7 +21,7 @@ class Tax(models.Model):
         return f'Tax: {self.rate}'
 
 
-class Item(models.Model):
+class Item(TimestampedModel):
     name = models.CharField(
         _('name'), max_length=128
     )
