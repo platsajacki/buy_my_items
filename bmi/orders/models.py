@@ -22,8 +22,12 @@ class Order(TimestampedModel):
     items = models.ManyToManyField(
         Item, verbose_name=_('items'), related_name='orders'
     )
-    discounts = models.ManyToManyField(
-       Discount, verbose_name=_('discounts'), related_name='orders',
+    discounts = models.ForeignKey(
+       Discount,
+       on_delete=models.SET_NULL,
+       verbose_name=_('discounts'),
+       related_name='orders',
+       null=True,
     )
 
     class Meta:
