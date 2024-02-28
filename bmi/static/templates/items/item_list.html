@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  Shopping card
+{% endblock %}
+
+{% block content %}
+  <div class="content">
+    <div class="itme-list">
+      {% for item in object_list %}
+        {% include "includes/item_card.html" %}
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
