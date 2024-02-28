@@ -20,7 +20,7 @@ class Tax(NameModel, TimestampedModifiedModel):
         _('id'), max_length=50, primary_key=True
     )
     type = models.CharField(
-        _('type'), max_length=10, choices=TypeItem
+        _('type'), max_length=50, choices=TypeItem
     )
     description = models.TextField(
         _('description'), max_length=512

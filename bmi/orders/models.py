@@ -7,7 +7,7 @@ from items.models import Item
 
 
 class Discount(TimestampedModifiedModel):
-    id = models.CharField(_('coupon id'), max_length=255, primary_key=True)
+    id = models.CharField(_('id'), max_length=255, primary_key=True)
 
     class Meta:
         ordering = ('modified',)
