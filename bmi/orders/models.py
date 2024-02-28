@@ -7,7 +7,7 @@ from items.models import Item
 
 
 class Discount(TimestampedModifiedModel):
-    coupon_stripe_id = models.CharField(_('coupon stripe id'), max_length=255, unique=True)
+    id = models.CharField(_('coupon id'), max_length=255, primary_key=True)
 
     class Meta:
         ordering = ('modified',)
@@ -15,7 +15,7 @@ class Discount(TimestampedModifiedModel):
         verbose_name_plural = _('discounts')
 
     def __str__(self) -> str:
-        return f'Discount: {self.percent_off}%'
+        return f'Coupon: {self.id}'
 
 
 class Order(TimestampedModel):
