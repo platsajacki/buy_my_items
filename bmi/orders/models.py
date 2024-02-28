@@ -6,29 +6,8 @@ from core.models import TimestampedModel, TimestampedModifiedModel
 from items.models import Item
 
 
-class Discount(TimestampedModifiedModel):
-    id = models.CharField(_('id'), max_length=255, primary_key=True)
-
-    class Meta:
-        ordering = ('modified',)
-        verbose_name = _('discount')
-        verbose_name_plural = _('discounts')
-
-    def __str__(self) -> str:
-        return f'Coupon: {self.id}'
-
-
 class Order(TimestampedModel):
-    items = models.ManyToManyField(
-        Item, verbose_name=_('items'), related_name='orders'
-    )
-    discounts = models.ForeignKey(
-       Discount,
-       on_delete=models.SET_NULL,
-       verbose_name=_('discounts'),
-       related_name='orders',
-       null=True,
-    )
+    items = models.ManyToManyField(Item, verbose_name=_('items'), related_name='orders')
 
     class Meta:
         ordering = ('created',)
@@ -42,3 +21,24 @@ class Order(TimestampedModel):
 
     def __str__(self) -> str:
         return f'Order {self.pk}'
+
+
+class Discount(TimestampedModifiedModel):
+    id = models.CharField(
+        _('id'), max_length=255, primary_key=True
+    )
+    orders = models.ForeignKey(
+        Order,
+        on_delete=models.SET_NULL,
+        verbose_name=_('orders'),
+        related_name='discounts',
+        null=True,
+    )
+
+    class Meta:
+        ordering = ('modified',)
+        verbose_name = _('discount')
+        verbose_name_plural = _('discounts')
+
+    def __str__(self) -> str:
+        return f'Coupon: {self.id}'
