@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  About {{ item.name }}
+{% endblock %}
+
+{% block content %}
+  <form class="buy-form" method="post" action="{% url 'items:index' %}">
+    {% csrf_token %}
+    <div class="item">
+      <div><b>{{ item.name }}</b></div>
+      <div>{{ item.price }}</div>
+      <div>{{ item.currency|upper }}</div>
+    </div>
+    <button class="buy" type="submit">Buy</button>
+    <div class="description">
+      <b>About {{ item.name }}</b>:<br>
+      {{ item.description }}
+    </div>
+  </form>
+{% endblock %}

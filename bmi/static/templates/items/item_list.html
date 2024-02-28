@@ -2,15 +2,26 @@
 {% load static %}
 
 {% block title %}
-  Shopping card
+  Buy my items
 {% endblock %}
 
 {% block content %}
-  <div class="content">
-    <div class="itme-list">
-      {% for item in object_list %}
-        {% include "includes/item_card.html" %}
+  <form class="filter" method="get">
+    {{ filterset.form.as_p }}
+    <button type="submit">Filter</button>
+  </form>
+  <form class="buy-form" method="post" action="{% url 'items:index' %}">
+    {% csrf_token %}
+    <div class="item-list">
+      {% for item in filterset.qs %}
+        <div class="item">
+          <div><b>{{ item.name }}</b> - <a href="{% url 'items:detail' item.id %}">detail...</a></div>
+          <div>{{ item.price }}</div>
+          <div>{{ item.currency|upper }}</div>
+        </div>
+        <input class="form-input" type="checkbox" name="items" value="{{ item.id }}">
       {% endfor %}
     </div>
-  </div>
+    <button class="buy" type="submit">Buy</button>
+  </form>
 {% endblock %}

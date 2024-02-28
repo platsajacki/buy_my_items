@@ -1,0 +1,115 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+body {
+  max-width: 768px;
+  min-width: 400px;
+  margin: auto;
+}
+
+footer {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.navigation {
+  display: grid;
+  grid-template-columns: 35% 1fr;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0.5rem;
+}
+
+.navigation a {
+  width: 100px;
+  background-color: #febf4d;
+  padding: 0.5em;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  justify-self: end;
+}
+
+.logo {
+  width: 90px;
+  height: 90px;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 50% 30% 20%;
+  border: 1px solid #70cdff;
+  padding: 1rem;
+  border-radius: 10px;
+  background-color: #fffde5;
+  min-width: 500px;
+}
+
+.item-list {
+  display: grid;
+  grid-template-columns: 90% 10%;
+  gap: 0.5rem;
+  margin: 1rem;
+  margin-bottom: 0;
+}
+
+.buy-form {
+  display: grid;
+}
+
+.buy {
+  margin-top: 1rem;
+  width: 100px;
+  height: 25px;
+  background-color: #7ff172;
+  border-radius: 10px;
+  font-weight: bold;
+  color: white;
+  justify-self: center;
+}
+
+.form-input {
+  width: 40%;
+  height: 40%;
+  justify-self: center;
+  align-self: center;
+}
+
+.description {
+  margin: 1rem;
+  justify-self: center;
+  align-self: center;
+  text-align: center;
+}
+
+.filter {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  width: 300px;
+  margin: auto;
+  justify-items: center;
+}
+
+.filter p {
+  display: flex;
+  gap: 0.2rem;
+  justify-items: center;
+  align-self: center;
+}
+
+.filter button {
+  width: 80px;
+  height: 25px;
+  justify-self: start;
+  background-color: #febf4d;
+  border-radius: 10px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+}
+
