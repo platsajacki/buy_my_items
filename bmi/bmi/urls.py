@@ -5,7 +5,8 @@ from django.urls import URLPattern, URLResolver, include, path
 
 urlpatterns: list[URLPattern | URLResolver] = [
     path('admin/', admin.site.urls),
-    path('items/', include('items.urls', namespace='items'))
+    path('items/', include('items.urls', namespace='items')),
+    path('purchases/', include('orders.urls', namespace='purchases')),
 ]
 
 if settings.DEBUG:

@@ -10,7 +10,7 @@
     {{ filterset.form.as_p }}
     <button type="submit">Filter</button>
   </form>
-  <form class="buy-form" method="post" action="{% url 'items:index' %}">
+  <form class="buy-form" method="post" action="{% url 'purchases:buy' %}">
     {% csrf_token %}
     <div class="item-list">
       {% for item in filterset.qs %}

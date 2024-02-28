@@ -21,6 +21,10 @@ CSRF_TRUSTED_ORIGINS = getenv(
     'https://www.127.0.0.1, https://www.localhost'
 ).split(', ')
 
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
 
 # Application definition
 INSTALLED_APPS = [
