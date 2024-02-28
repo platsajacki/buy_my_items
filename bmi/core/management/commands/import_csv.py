@@ -12,7 +12,7 @@ DATA_DIR: str = f'{settings.BASE_DIR}/static/data'
 
 
 class Command(BaseCommand):
-    help: str = 'Импортирует данные из csv-файлов в базу данных'
+    help: str = 'Imports data from CSV files into the database'
 
     def handle(self, *args: Any, **options: Any) -> None:
         self.import_coupons()
@@ -27,11 +27,11 @@ class Command(BaseCommand):
                 if not instance.exists():
                     instance.create(**data)
                     self.stdout.write(
-                        self.style.SUCCESS(f'Данные успешно импортированы: {data['id']}')
+                        self.style.SUCCESS(f'Data imported successfully: {data['id']}')
                     )
                 else:
                     self.stdout.write(
-                        self.style.WARNING(f'Данные уже существуют: {data['id']}')
+                        self.style.WARNING(f'Data already exists: {data['id']}')
                     )
 
     def import_coupons(self) -> None:
