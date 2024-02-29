@@ -5,9 +5,9 @@ from orders.models import Discount, Order
 
 @admin.register(Discount)
 class DiscountAdmin(admin.ModelAdmin):
-    list_display = ('id', 'modified')
+    list_display = ('id', 'created')
     list_display_links = ('id',)
-    search_fields = ('modified',)
+    search_fields = ('created',)
 
 
 @admin.register(Order)

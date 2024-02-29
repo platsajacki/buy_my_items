@@ -6,18 +6,19 @@
 {% endblock %}
 
 {% block content %}
+  {% include "includes/apply_coupon.html" %}
+  <div class="item">
+    <div><b>{{ item.name }}</b></div>
+    <div>{{ item.price }}</div>
+    <div>{{ item.currency|upper }}</div>
+  </div>
   <form class="buy-form" method="post" action="{% url 'purchases:buy' %}">
     {% csrf_token %}
-    <div class="item">
-      <div><b>{{ item.name }}</b></div>
-      <div>{{ item.price }}</div>
-      <div>{{ item.currency|upper }}</div>
-    </div>
     <input type="hidden" name="items" value="{{ item.id }}">
     <button class="buy" type="submit">Buy</button>
-    <div class="description">
-      <b>About {{ item.name }}</b>:<br>
-      {{ item.description }}
-    </div>
   </form>
+  <div class="description">
+    <b>About {{ item.name }}</b>:<br>
+    {{ item.description }}
+  </div>
 {% endblock %}

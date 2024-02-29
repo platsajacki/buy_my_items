@@ -1,13 +1,14 @@
-from typing import Any
+from django.http import HttpRequest, JsonResponse
+from django.views import View
 
-from django.http import HttpRequest, HttpResponse
-from django.views.generic import CreateView
-
-from orders.services import OrderCreatorService
+from orders.services import DiscountCheckService, PaymentIntentCreatorService
 
 
-class OrderCreateView(CreateView):
-    http_method_names = ['post']
+class DiscountCheckView(View):
+    def get(self, request: HttpRequest, discount_id: str) -> JsonResponse:
+        return DiscountCheckService(request, discount_id)()
 
-    def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
-        return OrderCreatorService(request)()
+
+class PaymentIntentView(View):
+    def post(self, request: HttpRequest) -> JsonResponse:
+        return PaymentIntentCreatorService(request)()
