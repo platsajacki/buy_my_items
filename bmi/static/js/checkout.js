@@ -7,6 +7,7 @@ checkStatus()
 
 document.querySelector('#payment-form').addEventListener('submit', handleSubmit)
 
+
 // Fetches a payment intent and captures the client secret
 async function initialize() {
   let clientSecretData = document.getElementById('payment-form').getAttribute('data')
@@ -18,6 +19,7 @@ async function initialize() {
   const paymentElement = elements.create('payment', paymentElementOptions)
   paymentElement.mount('#payment-element')
 }
+
 
 async function handleSubmit(e) {
   e.preventDefault()
@@ -38,6 +40,7 @@ async function handleSubmit(e) {
 
   setLoading(false)
 }
+
 
 // Fetches the payment intent status after payment submission
 async function checkStatus() {
@@ -67,8 +70,8 @@ async function checkStatus() {
   }
 }
 
-// ------- UI helpers -------
 
+// ------- UI helpers -------
 function showMessage(messageText) {
   const messageContainer = document.querySelector('#payment-message');
 
@@ -80,6 +83,7 @@ function showMessage(messageText) {
     messageContainer.textContent = ''
   }, 4000)
 }
+
 
 // Show a spinner on payment submission
 function setLoading(isLoading) {

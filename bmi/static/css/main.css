@@ -87,7 +87,7 @@ footer {
   text-align: center;
 }
 
-.filter {
+.filter, .discount-form  {
   display: grid;
   grid-template-columns: 50% 50%;
   width: 300px;
@@ -102,7 +102,7 @@ footer {
   align-self: center;
 }
 
-.filter button {
+.filter button, .discount-form button {
   width: 80px;
   height: 25px;
   justify-self: start;
@@ -113,3 +113,8 @@ footer {
   text-align: center;
 }
 
+.discount-form {
+  width: 380px;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
