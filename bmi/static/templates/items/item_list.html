@@ -5,13 +5,17 @@
   Buy my items
 {% endblock %}
 
+{% block head %}
+  <script type="module" src="{% static 'js/items/items.js' %}" defer></script>
+{% endblock %}
+
 {% block content %}
   <form class="filter" method="get">
     {{ filterset.form.as_p }}
     <button type="submit">Filter</button>
   </form>
   {% include "includes/apply_coupon.html" %}
-  <form class="buy-form" method="post" action="{% url 'purchases:buy' %}">
+  <form class="buy-form" method="post" action="{% url 'purchases:pay' %}">
     {% csrf_token %}
     <div class="item-list">
       {% for item in filterset.qs %}

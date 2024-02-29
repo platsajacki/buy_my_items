@@ -1,6 +1,4 @@
-const applyCouponId = document.getElementById('apply-coupon')
-
-function applyCoupon() {
+export async function applyCoupon() {
   const couponCode = document.getElementById('coupon-id').value.toLocaleLowerCase()
   fetch('/purchases/coupons/' + couponCode + '/')
     .then(
@@ -20,6 +18,3 @@ function applyCoupon() {
       error => {alert('Error applying coupon: ' + error.message)}
     )
 }
-
-
-applyCouponId.addEventListener('click', applyCoupon)
