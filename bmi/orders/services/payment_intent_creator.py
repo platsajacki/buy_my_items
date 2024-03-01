@@ -1,8 +1,8 @@
 from dataclasses import dataclass
-from os import getenv
 
+from django.conf import settings
 from django.db import transaction
-from django.db.models import F, QuerySet, Sum
+from django.db.models import QuerySet, Sum
 from django.http import HttpRequest, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render
 from stripe import PaymentIntent
@@ -12,8 +12,8 @@ from items.models import Item
 from orders.models import Discount, Order
 
 APIS = {
-    'usd': getenv('USD_API'),
-    'eur': getenv('EUR_API'),
+    'usd': settings.USD_API,
+    'eur': settings.EUR_API,
 }
 
 
@@ -25,9 +25,7 @@ class PaymentIntentCreatorService(BaseService):
         return (
             Item.objects
             .select_related('tax')
-            .filter(
-                id__in=list(map(int, item_ids))
-            )
+            .filter(id__in=list(map(int, item_ids)))
             .annotate(total_price=Sum('price'))
         )
 
@@ -54,7 +52,7 @@ class PaymentIntentCreatorService(BaseService):
         if not item_ids:
             return HttpResponseBadRequest()
         items = self.get_items_queryset(item_ids)
-        if (count_currency := items.filter(currency=F('currency')).count()) > 1:
+        if (count_currency := items.values('currency').distinct().count()) > 1:
             return HttpResponseBadRequest(
                 'Order can only contain items with the same currency.'
             )

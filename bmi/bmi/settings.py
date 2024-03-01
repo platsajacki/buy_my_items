@@ -119,13 +119,15 @@ TEMPLATES = [
 ]
 
 
+# API KEYS
+USD_API = getenv('USD_API')
+EUR_API = getenv('EUR_API')
+
+
 # Internationalization
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
 # Default primary key field type
