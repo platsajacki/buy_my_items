@@ -1,6 +1,5 @@
 from django.http import HttpRequest, HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views import View
-from django.views.generic import TemplateView
 
 from orders.services import DiscountCheckService, PaymentIntentCreatorService
 
@@ -15,5 +14,6 @@ class PaymentIntentView(View):
         return PaymentIntentCreatorService(request)()
 
 
-class CheckoutTemplateView(TemplateView):
-    template_name = 'checkout.html'
+class StripeSessionCreateView(View):
+    def get(self, request: HttpRequest):
+        return

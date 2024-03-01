@@ -15,7 +15,7 @@
     <button type="submit">Filter</button>
   </form>
   {% include "includes/apply_coupon.html" %}
-  <form class="buy-form" method="post" action="{% url 'purchases:pay' %}">
+  <form class="buy-form" method="post" action="{% url 'purchases:buy' %}">
     {% csrf_token %}
     <div class="item-list">
       {% for item in filterset.qs %}

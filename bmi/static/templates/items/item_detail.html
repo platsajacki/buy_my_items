@@ -16,7 +16,7 @@
     <div>{{ item.price }}</div>
     <div>{{ item.currency|upper }}</div>
   </div>
-  <form class="buy-form" method="post" action="{% url 'purchases:pay' %}">
+  <form class="buy-form" method="post" action="{% url 'purchases:buy' %}">
     {% csrf_token %}
     <input type="hidden" name="items" value="{{ item.id }}">
     <button class="buy" type="submit">Buy</button>
