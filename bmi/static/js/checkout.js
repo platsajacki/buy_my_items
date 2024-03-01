@@ -10,7 +10,7 @@ document.querySelector('#payment-form').addEventListener('submit', handleSubmit)
 
 // Fetches a payment intent and captures the client secret
 async function initialize() {
-  let clientSecretData = document.getElementById('payment-form').getAttribute('data')
+  const clientSecretData = document.getElementById('payment-form').getAttribute('client')
 
   elements = stripe.elements({clientSecret: clientSecretData})
 
