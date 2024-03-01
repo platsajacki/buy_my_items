@@ -1,7 +1,7 @@
 from django.http import HttpRequest, HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views import View
 
-from orders.services import DiscountCheckService, PaymentIntentCreatorService
+from orders.services import DiscountCheckService, PaymentIntentCreatorService, StripeSessionCreatorService
 
 
 class DiscountCheckView(View):
@@ -16,4 +16,4 @@ class PaymentIntentView(View):
 
 class StripeSessionCreateView(View):
     def get(self, request: HttpRequest):
-        return
+        return StripeSessionCreatorService()()
