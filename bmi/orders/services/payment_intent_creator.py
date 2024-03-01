@@ -62,20 +62,5 @@ class PaymentIntentCreatorService(BaseService):
         return render(
             self.request,
             'checkout.html',
-            context={
-                'client': self.get_payment_intent(order, items).client_secret,
-                'data':
-                    {
-                        'percent_off': self.request.POST.get('percent_off'),
-                        'items': [
-                            {
-                                'name': item.name,
-                                'price': int(item.price * 100),
-                                'currency': item.currency,
-                                'tax': item.tax.id,
-                            }
-                            for item in items
-                        ]
-                    }
-                }
+            context={'client': self.get_payment_intent(order, items).client_secret}
             )
