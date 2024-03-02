@@ -59,6 +59,8 @@ ROOT_URLCONF = 'bmi.urls'
 
 WSGI_APPLICATION = 'bmi.wsgi.application'
 
+CSRF_FAILURE_VIEW = 'core.views.csrf_failure'
+
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
