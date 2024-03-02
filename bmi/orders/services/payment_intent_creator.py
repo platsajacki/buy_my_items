@@ -97,7 +97,7 @@ class PaymentIntentCreatorService(BaseService):
             'checkout.html',
             context={
                 'client': payment_intent.client_secret,
-                'return_url': reverse('items:index'),
+                'return_url': self.request.build_absolute_uri(reverse('items:index')),
                 'total_amount': payment_intent.amount / 100,
                 'discount': order.discount,
                 'percent_off': percent_off,

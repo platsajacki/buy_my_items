@@ -7,6 +7,7 @@
 
 {% block head %}
   <script type="module" src="{% static 'js/items/items.js' %}" defer></script>
+  <script type="module" src="{% static 'js/items/items_list.js' %}" defer></script>
 {% endblock %}
 
 {% block content %}
@@ -24,7 +25,7 @@
           <div>{{ item.price }}</div>
           <div>{{ item.currency|upper }}</div>
         </div>
-        <input class="form-input" type="checkbox" name="items" value="{{ item.id }}">
+        <input class="form-input" type="checkbox" name="items" currency="{{ item.currency }}" value="{{ item.id }}">
       {% endfor %}
     </div>
     {% include "includes/hidden_inputs.html" %}

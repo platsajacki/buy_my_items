@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  Error
+{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/checkout.css' %}" />
+{% endblock %}
+
+{% block content %}
+  <div id="payment-info" class="payment-info">
+    Error! {{ error }}
+  </div>
+{% endblock %}
