@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block content %}
-  <div class="payment-info">
+  <div id="payment-info" class="payment-info" return_url="{{ return_url }}">
     <p>Total amount: {{ total_amount }}</p>
     <p>Discount: {{ discount }}</p>
     <p>Percent off: {{ percent_off }}</p>
@@ -22,7 +22,7 @@
             {{ item.name }} - {{ item.price }}
           </li>
         {% endfor %}
-        </ul>
+      </ul>
     </p>
     <p>Tax amount exclusive: {{ tax_amount_exclusive }}</p>
   </div>

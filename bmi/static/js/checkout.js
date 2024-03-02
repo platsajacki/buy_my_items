@@ -28,7 +28,7 @@ async function handleSubmit(e) {
   const { error } = await stripe.confirmPayment(
     {
       elements,
-      confirmParams: {return_url: 'http://localhost:8000/items/'},
+      confirmParams: {return_url: document.getElementById('payment-form').getAttribute('return_url')},
     }
   )
 

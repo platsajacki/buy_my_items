@@ -6,6 +6,7 @@ from django.db import transaction
 from django.db.models import QuerySet
 from django.http import HttpRequest, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render
+from django.urls import reverse
 from stripe import PaymentIntent
 from stripe.tax import Calculation
 
@@ -97,6 +98,7 @@ class PaymentIntentCreatorService(BaseService):
             'checkout.html',
             context={
                 'client': payment_intent.client_secret,
+                'return_url': reverse('items:index'),
                 'total_amount': payment_intent.amount / 100,
                 'discount': order.discount,
                 'percent_off': percent_off,
