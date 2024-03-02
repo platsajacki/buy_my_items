@@ -27,6 +27,8 @@
         <input class="form-input" type="checkbox" name="items" value="{{ item.id }}">
       {% endfor %}
     </div>
+    <input type="hidden" id="percent-off" name="percent_off">
+    <input type="hidden" id="discount-id" name="discount_id">
     <button class="buy" type="submit">Buy</button>
   </form>
 {% endblock %}

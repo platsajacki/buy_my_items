@@ -9,6 +9,7 @@ export async function applyCoupon() {
     .then(
       data => {
         document.getElementById('coupon-id').value = data.id
+        document.getElementById('discount-id').value = data.id
         document.getElementById('coupon-id').style.color = 'green'
         document.getElementById('percent-off').value = data.percent_off
         alert('Coupon applied successfully!')

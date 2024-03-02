@@ -10,6 +10,22 @@
 {% endblock %}
 
 {% block content %}
+  <div class="payment-info">
+    <p>Total amount: {{ total_amount }}</p>
+    <p>Discount: {{ discount }}</p>
+    <p>Percent off: {{ percent_off }}</p>
+    <p>
+      Items:<br>
+      <ul>
+        {% for item in items %}
+          <li>
+            {{ item.name }} - {{ item.price }}
+          </li>
+        {% endfor %}
+        </ul>
+    </p>
+    <p>Tax amount exclusive: {{ tax_amount_exclusive }}</p>
+  </div>
   <div class="pay">
     <form class="payment-form"  client="{{ client }}" id="payment-form">
       <div id="payment-element"></div>

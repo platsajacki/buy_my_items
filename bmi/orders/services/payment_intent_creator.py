@@ -1,11 +1,13 @@
 from dataclasses import dataclass
+from decimal import Decimal
 
 from django.conf import settings
 from django.db import transaction
-from django.db.models import QuerySet, Sum
+from django.db.models import QuerySet
 from django.http import HttpRequest, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render
 from stripe import PaymentIntent
+from stripe.tax import Calculation
 
 from core.services import BaseService
 from items.models import Item
@@ -16,26 +18,53 @@ APIS = {
     'eur': settings.EUR_API,
 }
 
+TEST_CUSTOMER_DETAILS = {
+    'address': {
+        'line1': '920 5th Ave',
+        'city': 'Seattle',
+        'state': 'WA',
+        'postal_code': '98104',
+        'country': 'US',
+        },
+    'address_source': 'shipping',
+}
+"""So we don't have the customer's data, we use test ones."""
+
 
 @dataclass
 class PaymentIntentCreatorService(BaseService):
     request: HttpRequest
 
     def get_items_queryset(self, item_ids: list[str]) -> QuerySet:
-        return (
-            Item.objects
-            .select_related('tax')
-            .filter(id__in=list(map(int, item_ids)))
-            .annotate(total_price=Sum('price'))
+        return Item.objects.select_related('tax').filter(id__in=list(map(int, item_ids)))
+
+    def calculate_tax(self, items: QuerySet[Item], percent_off: str | None) -> Calculation:
+        return Calculation.create(
+            api_key=APIS[items[0].currency],
+            currency=items[0].currency,
+            customer_details=TEST_CUSTOMER_DETAILS,  # type: ignore[arg-type]
+            expand=['line_items'],
+            line_items=[
+                {
+                    'reference': f'№{item.id}. {item.name}',
+                    'amount': (
+                        int(item.price * 100) - int(item.price * Decimal(percent_off))
+                        if percent_off else
+                        int(item.price * 100)
+                    ),
+                    'tax_code': item.tax.id,
+                }
+                for item in items
+            ]
         )
 
-    def get_payment_intent(self, order: Order, items: QuerySet) -> PaymentIntent:
+    def get_payment_intent(self, order: Order, calculation_taxs: Calculation) -> PaymentIntent:
         return PaymentIntent.create(
-            api_key=APIS[items[0].currency],
-            amount=int(items[0].total_price * 100),
-            currency=items[0].currency,
-            automatic_payment_methods={"enabled": True},
-            description=f"Payment for order {order.id}",
+            api_key=calculation_taxs.api_key,
+            amount=calculation_taxs.amount_total,
+            currency=calculation_taxs.currency,
+            automatic_payment_methods={'enabled': True},
+            description=f'Payment for order {order.id}',
         )
 
     def get_order(self, items: QuerySet) -> Order:
@@ -44,6 +73,7 @@ class PaymentIntentCreatorService(BaseService):
         if discount_id := self.request.POST.get('discount_id'):
             discount, _ = Discount.objects.get_or_create(id=discount_id)
             order.discount = discount
+            order.save()
         return order
 
     @transaction.atomic
@@ -58,9 +88,19 @@ class PaymentIntentCreatorService(BaseService):
             )
         if not count_currency:
             return HttpResponseBadRequest()
+        percent_off = self.request.POST.get('percent_off')
         order = self.get_order(items)
+        calculation_taxs = self.calculate_tax(items, percent_off)
+        payment_intent = self.get_payment_intent(order, calculation_taxs)
         return render(
             self.request,
             'checkout.html',
-            context={'client': self.get_payment_intent(order, items).client_secret}
-            )
+            context={
+                'client': payment_intent.client_secret,
+                'total_amount': payment_intent.amount / 100,
+                'discount': order.discount,
+                'percent_off': percent_off,
+                'items': calculation_taxs.list_line_items(),
+                'tax_amount_exclusive': calculation_taxs.tax_amount_inclusive / 100,
+            }
+        )
