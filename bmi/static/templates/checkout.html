@@ -12,8 +12,12 @@
 {% block content %}
   <div id="payment-info" class="payment-info" return_url="{{ return_url }}">
     <p>Total amount: {{ total_amount }}</p>
-    <p>Discount: {{ discount }}</p>
-    <p>Percent off: {{ percent_off }}</p>
+    <p>
+      Discount: {% if discount.id %}{{ discount.id }}{% else %}-{% endif %}
+    </p>
+    <p>
+      Percent off: {% if percent_off %}{{ percent_off }}{% else %}-{% endif %}
+    </p>
     <p>
       Items:<br>
       <ul>
@@ -24,7 +28,7 @@
         {% endfor %}
       </ul>
     </p>
-    <p>Tax amount exclusive: {{ tax_amount_exclusive }}</p>
+    <p>Tax: {{ tax }}</p>
   </div>
   <div class="pay">
     <form class="payment-form"  client="{{ client }}" id="payment-form">

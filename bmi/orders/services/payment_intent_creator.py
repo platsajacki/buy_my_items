@@ -64,7 +64,6 @@ class PaymentIntentCreatorService(BaseService):
             api_key=calculation_taxs.api_key,
             amount=calculation_taxs.amount_total,
             currency=calculation_taxs.currency,
-            automatic_payment_methods={'enabled': True},
             description=f'Payment for order {order.id}',
         )
 
@@ -102,7 +101,7 @@ class PaymentIntentCreatorService(BaseService):
                 'total_amount': payment_intent.amount / 100,
                 'discount': order.discount,
                 'percent_off': percent_off,
-                'items': calculation_taxs.list_line_items(),
-                'tax_amount_exclusive': calculation_taxs.tax_amount_inclusive / 100,
+                'items': items,
+                'tax': calculation_taxs.tax_amount_inclusive / 100,
             }
         )
