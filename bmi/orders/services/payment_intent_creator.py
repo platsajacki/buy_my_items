@@ -103,6 +103,6 @@ class PaymentIntentCreatorService(BaseService):
                 'discount': order.discount,
                 'percent_off': percent_off,
                 'items': items,
-                'tax': calculation_taxs.tax_amount_inclusive / 100,
+                'tax': calculation_taxs.tax_amount_exclusive / 100,
             }
         )

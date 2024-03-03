@@ -39,12 +39,13 @@ def items(tax: Tax) -> list[Item]:
     dt = datetime.now()
     instances = [
         Item(
+            id=i + 1,
             name=f'Item {i}',
             description='Item',
             created=dt,
             modified=dt,
             price=Decimal('100.22'),
-            currency='usd' if i // 2 == 0 else 'eur',
+            currency='usd' if i == 0 else 'eur',
             tax=tax,
         ) for i in range(5)
     ]
@@ -89,3 +90,33 @@ def event_data(request, order: Order) -> dict:
         },
         'expected_status': request.param[1]
     }
+
+
+@pytest.fixture
+def payment_intent_return_value(mocker: MockerFixture) -> Mock:
+    mock = mocker.Mock()
+    mock.client_secret = 'mocked_client_secret'
+    mock.amount = 2000
+    return mock
+
+
+@pytest.fixture
+def calculation_return_value(mocker: MockerFixture) -> Mock:
+    mock = mocker.Mock()
+    mock.api_key = 'mocked_api_key'
+    mock.currency = 'usd'
+    mock.amount_total = 2000
+    mock.tax_amount_exclusive = 100
+    return mock
+
+
+@pytest.fixture
+def mock_payment_service_methods(
+    mocker: MockerFixture, calculation_return_value: Mock, payment_intent_return_value: Mock
+) -> None:
+    mocker.patch(
+        'orders.services.PaymentIntentCreatorService.calculate_tax', return_value=calculation_return_value
+    )
+    mocker.patch(
+        'orders.services.PaymentIntentCreatorService.get_payment_intent', return_value=payment_intent_return_value
+    )
