@@ -1,0 +1,10 @@
+.coverage
+.gitignore
+.env
+.mypy_cache
+.vscode
+__pycache__
+
+Makefile
+tests
+venv
