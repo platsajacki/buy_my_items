@@ -124,7 +124,7 @@ TEMPLATES = [
 # API KEYS
 USD_API = getenv('USD_API')
 EUR_API = getenv('EUR_API')
-
+WH_PAYMENT_INTENT = getenv('WH_PAYMENT_INTENT')
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'

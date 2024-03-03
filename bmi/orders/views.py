@@ -2,7 +2,7 @@ from django.http import HttpRequest, HttpResponse, HttpResponseBadRequest, JsonR
 from django.views import View
 from django.views.generic import TemplateView
 
-from orders.services import DiscountCheckService, PaymentIntentCreatorService
+from orders.services import DiscountCheckService, PaymentIntentCreatorService, PaymentIntentWebhookService
 
 
 class DiscountCheckView(View):
@@ -17,3 +17,8 @@ class PaymentIntentView(View):
 
 class SucceedOrderTemplateView(TemplateView):
     template_name = 'succeed_order.html'
+
+
+class PaymentIntentWebhookView(View):
+    def post(self, request: HttpRequest) -> JsonResponse:
+        return PaymentIntentWebhookService(request)()

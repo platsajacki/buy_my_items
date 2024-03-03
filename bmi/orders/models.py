@@ -5,6 +5,13 @@ from core.models import TimestampedCreatedModel, TimestampedModel
 from items.models import Item
 
 
+class Status(models.TextChoices):
+    CREATED = 'created', _('created')
+    CANCELED = 'canceled', _('canceled')
+    FAILED = 'failed', _('failed')
+    SUCCEEDED = 'succeeded', _('succeeded')
+
+
 class Discount(TimestampedCreatedModel):
     id = models.CharField(_('id'), max_length=255, primary_key=True)
 
@@ -23,6 +30,9 @@ class Order(TimestampedModel):
     )
     discount = models.ForeignKey(
         Discount, on_delete=models.SET_NULL, null=True, related_name='orders'
+    )
+    status = models.CharField(
+        _('status'), choices=Status, default=Status.CREATED
     )
 
     class Meta:

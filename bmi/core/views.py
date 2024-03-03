@@ -7,12 +7,12 @@ error_html = 'error.html'
 
 
 def csrf_failure(request: HttpRequest, reason='') -> HttpResponse:
-    return render(request, error_html, status=HTTPStatus.FORBIDDEN)
+    return render(request, error_html, {'error': reason}, status=HTTPStatus.FORBIDDEN)
 
 
 def page_not_found(request: HttpRequest, exception: Exception) -> HttpResponse:
-    return render(request, error_html, status=HTTPStatus.NOT_FOUND)
+    return render(request, error_html, {'error': 'Page not found.'}, status=HTTPStatus.NOT_FOUND)
 
 
 def server_error(request: HttpRequest) -> HttpResponse:
-    return render(request, error_html, status=HTTPStatus.INTERNAL_SERVER_ERROR)
+    return render(request, error_html, {'error': 'Internal Server Error.'}, status=HTTPStatus.INTERNAL_SERVER_ERROR)

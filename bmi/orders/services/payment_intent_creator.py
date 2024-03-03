@@ -65,6 +65,7 @@ class PaymentIntentCreatorService(BaseService):
             amount=calculation_taxs.amount_total,
             currency=calculation_taxs.currency,
             description=f'Payment for order {order.id}',
+            metadata={'order': str(order.id)},
         )
 
     def get_order(self, items: QuerySet) -> Order:
