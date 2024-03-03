@@ -1,7 +1,7 @@
 from django.urls import path
 from django.views.decorators.csrf import csrf_exempt
 
-from orders.views import DiscountCheckView, PaymentIntentView, SucceedOrderTemplateView, PaymentIntentWebhookView
+from orders.views import DiscountCheckView, PaymentIntentView, PaymentIntentWebhookView, SucceedOrderTemplateView
 
 app_name = 'purchases'
 
