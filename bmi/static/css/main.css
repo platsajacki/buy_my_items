@@ -42,7 +42,7 @@ footer {
 
 .item {
   display: grid;
-  grid-template-columns: 50% 30% 20%;
+  grid-template-columns: 80% 10% 10%;
   border: 1px solid #70cdff;
   padding: 1rem;
   border-radius: 10px;
