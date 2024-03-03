@@ -6,6 +6,7 @@ from decimal import Decimal
 from unittest.mock import Mock
 
 from items.models import Item, Tax
+from orders.models import Discount, Order
 
 
 @pytest.fixture
@@ -57,3 +58,34 @@ def coupon_return_value(mocker: MockerFixture) -> Mock:
     mock.percent_off = 10
     mock.valid = True
     return mock
+
+
+@pytest.fixture
+def discount() -> Discount:
+    return Discount.objects.create(id='first')
+
+
+@pytest.fixture
+def order(items: list[Item], discount: Discount) -> Order:
+    order = Order.objects.create(discount=discount)
+    order.items.add(*items)
+    return order
+
+
+@pytest.fixture(
+    params=[
+        ('payment_intent.canceled', 'canceled'),
+        ('payment_intent.payment_failed', 'failed'),
+        ('payment_intent.succeeded', 'succeeded'),
+    ]
+)
+def event_data(request, order: Order) -> dict:
+    return {
+        'type': request.param[0],
+        'data': {
+            'object': {
+                'metadata': {'order': order.id}
+            }
+        },
+        'expected_status': request.param[1]
+    }
