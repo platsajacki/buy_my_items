@@ -12,6 +12,7 @@ services:
     env_file: .env
 
   bmi:
+    image: ${DOCKER_LOGIN}/bmi
     build: ./
     env_file: .env
     volumes:
