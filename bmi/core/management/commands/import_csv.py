@@ -19,12 +19,12 @@ class Command(BaseCommand):
         self.import_items()
 
     def import_data_from_csv(
-        self, file_path: str, model_class: type[Discount] | type[Tax], field_names: list[str]
+        self, file_path: str, model_class: type[Discount] | type[Tax] | type[Item], field_names: list[str]
     ) -> None:
         with open(file_path, 'r') as csv_file:
             next(reader := csv.reader(csv_file))
             for row in reader:
-                data: dict[str, str] = dict(zip(field_names, row))
+                data: dict[str, str | Tax] = dict(zip(field_names, row))
                 instance = model_class.objects.filter(**data)
                 if model_class == Item:
                     data['tax'] = Tax.objects.get(id=data['tax'])

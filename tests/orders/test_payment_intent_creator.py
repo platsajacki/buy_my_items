@@ -18,6 +18,7 @@ def test_payment_intant_creator_with_full_valid_data(client: Client):
     }
     response = client.post(reverse('purchases:buy'), data=data)
     order = Order.objects.first()
+    assert order is not None
     assert order.discount == Discount.objects.get(id=data['discount_id'])
     assert list(order.items.values_list('id', flat=True)) == list(map(int, data['items']))
     assert response.status_code == HTTPStatus.OK

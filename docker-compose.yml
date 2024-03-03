@@ -21,6 +21,7 @@ services:
       - db
 
   gateway:
+    image: ${DOCKER_LOGIN}/bmi-gateway
     build: ./nginx/
     env_file: .env
     ports:
