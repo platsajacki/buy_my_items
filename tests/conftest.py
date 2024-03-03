@@ -1,7 +1,9 @@
 import pytest
+from pytest_mock import MockerFixture
 
 from datetime import datetime
 from decimal import Decimal
+from unittest.mock import Mock
 
 from items.models import Item, Tax
 
@@ -46,3 +48,12 @@ def items(tax: Tax) -> list[Item]:
         ) for i in range(5)
     ]
     return Item.objects.bulk_create(instances)
+
+
+@pytest.fixture
+def coupon_return_value(mocker: MockerFixture) -> Mock:
+    mock = mocker.Mock()
+    mock.id = 'first'
+    mock.percent_off = 10
+    mock.valid = True
+    return mock
